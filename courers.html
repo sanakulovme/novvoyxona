@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Sweet Delights - Couriers</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ec7f13",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#221910",
+                    },
+                    fontFamily: {
+                        "display": ["Epilogue"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+<div class="flex flex-col min-h-screen">
+<header class="sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm z-10 border-b border-primary/20 dark:border-primary/30">
+<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex items-center justify-between h-16">
+<div class="flex items-center gap-4">
+<div class="text-primary">
+<svg class="h-8 w-8" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C12.9543 4 4 12.9543 4 24C4 35.0457 12.9543 44 24 44C35.0457 44 44 35.0457 44 24C44 12.9543 35.0457 4 24 4ZM24 8C32.8366 8 40 15.1634 40 24C40 28.5362 37.8929 32.5919 34.6934 35.5311L12.4689 13.3066C15.4081 10.1071 19.4638 8 24 8ZM8 24C8 19.4638 10.1071 15.4081 13.3066 12.4689L35.5311 34.6934C32.5919 37.8929 28.5362 40 24 40C15.1634 40 8 32.8366 8 24Z" fill="currentColor"></path>
+</svg>
+</div>
+<h1 class="text-xl font-bold text-background-dark dark:text-background-light">Sweet Delights</h1>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="#">Menu</a>
+<a class="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="#">Cakes</a>
+<a class="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="#">About</a>
+<a class="text-sm font-medium text-background-dark/70 dark:text-background-light/70 hover:text-primary dark:hover:text-primary transition-colors" href="#">Contact</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center gap-2 h-10 px-4 rounded-lg bg-primary/20 dark:bg-primary/30 text-primary font-bold text-sm hover:bg-primary/30 dark:hover:bg-primary/40 transition-colors">
+<span class="material-symbols-outlined text-base">shopping_cart</span>
+<span class="truncate">Cart</span>
+</button>
+<button>
+<img alt="User Avatar" class="size-10 rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9qlvPLsMgPoCo-71hZ-Si1BVosfNm8EQRY_NHzUFkS4V3Km6ikpxMSPNAuMeww_bTaiIqG0nOVPfVtmq9che9KtwIM3Nve3JaxdNitP1ohnU8EDemIGx9xKwpny-PG-1roo9fhNovv7AxJvMLOHWX8AFMs7QDt7fXWTnhgi2ESlIyIdMQELSquriSsM3-u_0-i18Wdj6p2A1VMB7Py2p9_YnXdyOBxC0mvJcOqfK0fBPPG5qP_3OPB0lCYAx0ysZK5NO6CaLEk-2K"/>
+</button>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+<h2 class="text-3xl font-bold text-background-dark dark:text-background-light">Couriers</h2>
+<div class="relative w-full sm:w-64">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-background-dark/40 dark:text-background-light/40">search</span>
+<input class="w-full h-10 pl-10 pr-4 rounded-lg border-none bg-background-dark/5 dark:bg-background-light/5 text-background-dark dark:text-background-light placeholder:text-background-dark/40 dark:placeholder:text-background-light/40 focus:ring-2 focus:ring-primary" placeholder="Search couriers..." type="text"/>
+</div>
+</div>
+<div class="overflow-x-auto bg-background-light dark:bg-background-dark rounded-lg border border-primary/20 dark:border-primary/30">
+<table class="w-full text-left">
+<thead class="border-b border-primary/20 dark:border-primary/30">
+<tr>
+<th class="p-4" scope="col">
+<button class="flex items-center gap-2 text-sm font-semibold text-background-dark dark:text-background-light group">
+                                        Last Name
+                                        <span class="material-symbols-outlined text-base opacity-0 group-hover:opacity-100 transition-opacity">unfold_more</span>
+</button>
+</th>
+<th class="p-4" scope="col">
+<button class="flex items-center gap-2 text-sm font-semibold text-background-dark dark:text-background-light group">
+                                        Branch
+                                        <span class="material-symbols-outlined text-base opacity-0 group-hover:opacity-100 transition-opacity">unfold_more</span>
+</button>
+</th>
+<th class="p-4" scope="col">
+<button class="flex items-center gap-2 text-sm font-semibold text-background-dark dark:text-background-light group">
+                                        First Day
+                                        <span class="material-symbols-outlined text-base opacity-0 group-hover:opacity-100 transition-opacity">unfold_more</span>
+</button>
+</th>
+<th class="p-4" scope="col">
+<button class="flex items-center gap-2 text-sm font-semibold text-background-dark dark:text-background-light group">
+                                        First Month
+                                        <span class="material-symbols-outlined text-base opacity-0 group-hover:opacity-100 transition-opacity">unfold_more</span>
+</button>
+</th>
+<th class="p-4 text-sm font-semibold text-background-dark dark:text-background-light" scope="col">Phone</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/10 dark:divide-primary/20">
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Smith</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Downtown</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">85%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">92%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-123-4567</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Johnson</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Uptown</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">78%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">88%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-987-6543</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Williams</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Midtown</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">90%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">95%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-246-8013</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Brown</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Westside</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">72%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">80%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-369-1470</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Davis</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Eastside</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">88%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">93%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-789-0123</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Miller</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Northside</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">75%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">85%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-456-7890</td>
+</tr>
+<tr class="hover:bg-primary/5 dark:hover:bg-primary/10 transition-colors">
+<td class="p-4 text-sm text-background-dark dark:text-background-light font-medium">Wilson</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">Southside</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">82%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">90%</td>
+<td class="p-4 text-sm text-background-dark/70 dark:text-background-light/70">555-654-3210</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</main>
+</div>
+
+</body></html>

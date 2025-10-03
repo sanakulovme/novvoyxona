@@ -9,5 +9,10 @@ class Baker extends Model
 {
     use HasFactory;
 
-    protected $fillable =["name", "phone", "status", "location"];
+    protected $fillable = ["name", "phone", "status", "branch_id"];
+
+    public function branch()
+    {
+        return $this->belongsTo(Branch::class);
+    }
 }

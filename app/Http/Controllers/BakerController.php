@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\Baker;
+use App\Models\Branch;
 
 class BakerController extends Controller
 {
@@ -15,7 +16,8 @@ class BakerController extends Controller
     {
         return response()->json([
             'ok' => true,
-            'data' => Baker::all(),
+            'data' => Baker::with('branch')->get(),
+            'branches' => Branch::all(),
         ]);
     }
 
@@ -27,7 +29,7 @@ class BakerController extends Controller
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'phone'    => 'required|string|min:9|max:15',
-            'location' => 'required|string|max:255',
+            'branch_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -38,12 +40,12 @@ class BakerController extends Controller
             ], 422);
         }
 
-        $data = Baker::create($validator->validated());
+        Baker::create($validator->validated());
 
         return response()->json([
             'ok' => true,
             'message' => 'Baker successfully created',
-            'data' => $data
+            'data' => Baker::with('branch')->get(),
         ], 201);
     }
 

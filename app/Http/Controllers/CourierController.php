@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Courier;
+use App\Models\Branch;
 
 class CourierController extends Controller
 {
@@ -15,7 +16,8 @@ class CourierController extends Controller
     {
         return response()->json([
             'ok' => true,
-            'data' => Courier::all()
+            'data' => Courier::with('branch')->get(),
+            'branches' => Branch::all(),
         ]);
     }
 
@@ -27,7 +29,7 @@ class CourierController extends Controller
         $validator = Validator::make($request->all(), [
             'name'     => 'required|string|max:255',
             'phone'    => 'required|string|min:9|max:15',
-            'location' => 'required|string|max:255',
+            'branch_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -38,12 +40,12 @@ class CourierController extends Controller
             ], 422);
         }
 
-        $courier = Courier::create($validator->validated());
+        Courier::create($validator->validated());
 
         return response()->json([
             'ok'      => true,
             'message' => 'Courier successfully created',
-            'data'    => $courier
+            'data'    => Courier::with('branch')->get(),
         ], 201);
     }
 

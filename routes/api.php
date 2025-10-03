@@ -6,6 +6,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BakerController;
 use App\Http\Controllers\CourierController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\BranchController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TabletController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,15 +28,22 @@ Route::group([
     'prefix' => 'auth'
 
 ], function ($router) {
-
     Route::post('login', [AuthController::class, 'login']);
-    Route::post('logout', [AuthController::class, 'logout']);
-    Route::post('refresh', [AuthController::class, 'refresh']);
-    Route::post('me', [AuthController::class, 'me']);
-
+    Route::post('session', [AuthController::class, 'me']);
 });
 
+Route::group([
 
+    // 'middleware' => 'api',
+    'prefix' => 'dashboard'
+
+], function ($router) {
+    Route::get('analytics', [DashboardController::class, 'analytics']);
+});
+
+Route::resource('product', ProductController::class);
+Route::resource('branch', BranchController::class);
 Route::resource('baker', BakerController::class);
 Route::resource('courier', CourierController::class);
 Route::resource('order', OrderController::class);
+Route::resource('tablet', TabletController::class);
