@@ -15,4 +15,5 @@ class Product extends Model
     {
         return $this->belongsToMany(Branch::class, 'product_connects', 'product_id', 'branch_id');
     }
+
 }

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Http\Request;
+
+use App\Models\Tablet;
+use App\Models\Courier;
 
 class AuthController extends Controller
 {
@@ -14,7 +19,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('jwt.auth', ['except' => ['login', 'tabletLogin', 'courierLogin']]);
     }
 
     /**
@@ -34,6 +39,58 @@ class AuthController extends Controller
         }
 
         return $this->respondWithToken($token);
+    }
+
+    public function tabletLogin(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = request(['phone', 'password']);
+
+        if (! $token = auth('tablet')->attempt($credentials)) {
+            return response()->json([
+                'ok' => false,
+                'error' => 'Telefon raqami yoki parol xato!',
+                'request' => $request->all()
+            ], 401);
+        }
+
+        return response()->json([
+            'ok' => true,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('tablet')->factory()->getTTL() * 60,
+            'user' => Tablet::where('id', auth('tablet')->user()->id)->with('branch')->first(),
+        ], 200);
+    }
+
+    public function courierLogin(Request $request)
+    {
+        $request->validate([
+            'phone' => 'required',
+            'password' => 'required',
+        ]);
+
+        $credentials = request(['phone', 'password']);
+
+        if (! $token = auth('courier')->attempt($credentials)) {
+            return response()->json([
+                'ok' => false,
+                'error' => 'Telefon raqami yoki parol xato!',
+                'request' => $request->all()
+            ], 401);
+        }
+
+        return response()->json([
+            'ok' => true,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('courier')->factory()->getTTL() * 60,
+            'user' => Courier::where('id', auth('courier')->user()->id)->with('branch')->first(),
+        ], 200);
     }
 
     /**

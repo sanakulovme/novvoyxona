@@ -41,8 +41,16 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'jwt', // 👈 JWT ishlatamiz
+            'driver' => 'jwt',
             'provider' => 'users',
+        ],
+        'tablet' => [
+            'driver' => 'jwt',
+            'provider' => 'tablets',
+        ],
+        'courier' => [
+            'driver' => 'jwt',
+            'provider' => 'couriers',
         ],
     ],
 
@@ -67,6 +75,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'tablets' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Tablet::class,
+        ],
+
+        'couriers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Courier::class,
         ],
 
         // 'users' => [

@@ -9,12 +9,9 @@ use Carbon\Carbon;
 
 class OrderController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $orders = Order::all();
+        $orders = Order::with(['branch', 'courier'])->get();
         return response()->json([
             'ok' => true,
             'data' => $orders
@@ -27,11 +24,11 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'courier_name'    => 'required|string|max:255',
-            'customer_name'   => 'required|string|max:255',
-            'customer_phone'  => 'required|string|max:15',
-            'amount'          => 'required|numeric|min:0',
-            'location'        => 'required|string|max:255',
+            'branch_id'    => 'required',
+            'customer_name'   => 'required',
+            'customer_phone'  => 'required',
+            'amount'          => 'required',
+            'location'        => 'required',
             'details'         => 'required',
         ]);
 
@@ -44,13 +41,14 @@ class OrderController extends Controller
         }
 
         $order = Order::create([
-            "courier_name" => $request->courier_name,
+            "branch_id" => $request->branch_id,
             "customer_name" => $request->customer_name,
             "customer_phone" => $request->customer_phone,
             "amount" => $request->amount,
             "location" => $request->location,
-            "order_time" => Carbon::now(),
-            "details" => json_encode($request->details)
+            "order_time" => Carbon::now()->format("Y-m-d"),
+            "details" => json_encode($request->details),
+            'products_count' => $request->products_count,
         ]);
 
         return response()->json([

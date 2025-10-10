@@ -3,65 +3,60 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\Tablet;
 use App\Models\Branch;
+use App\Models\Product;
 
 class TabletController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+
+    public function fetch()
+    {
+        return Tablet::with('branch')->get();
+    }
+
     public function index()
     {
         return response()->json([
             'ok' => true,
-            'data' => Tablet::with('branch')->get(),
+            'data' => $this->fetch(),
             'branches' => Branch::all(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'phone'     => 'required',
-            'password'    => 'required',
-            'branch_id' => 'required',
-        ]);
+        $check = Tablet::where('phone', $request->phone)->first();
 
-        if ($validator->fails()) {
+        if($check){
             return response()->json([
-                'ok'      => false,
-                'errors'  => $validator->errors(),
-                'message' => $validator->errors()->first()
-            ], 422);
+                'ok' => false,
+                'error' => "Bu raqam avval ishlatilgan!"
+            ], 409);
         }
 
-        Tablet::create($validator->validated());
+        Tablet::create([
+            'phone' => $request->phone,
+            'password' => Hash::make($request->password),
+            'branch_id' => $request->branch_id,
+        ]);
 
         return response()->json([
             'ok'      => true,
-            'message' => 'Courier successfully created',
-            'data'    => Tablet::with('branch')->get(),
+            'data'    => $this->fetch(),
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $tablet = Tablet::find($id);
-
-        if (!$tablet) {
-            return response()->json([
-                'ok'      => false,
-                'message' => 'tablet not found'
-            ], 404);
-        }
 
         return response()->json([
             'ok'   => true,
@@ -69,25 +64,15 @@ class TabletController extends Controller
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $tablet = Tablet::find($id);
 
-        if (!$tablet) {
-            return response()->json([
-                'ok'      => false,
-                'message' => 'Tablet not found'
-            ], 404);
-        }
-
         $tablet->delete();
 
         return response()->json([
-            'ok'      => true,
-            'message' => 'Tablet successfully deleted'
+            'ok'   => true,
+            'data' => $this->fetch()
         ]);
     }
 }

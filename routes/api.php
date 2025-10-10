@@ -10,6 +10,8 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TabletController;
+use App\Http\Controllers\TabletServiceController;
+use App\Http\Controllers\CourierServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +26,15 @@ use App\Http\Controllers\TabletController;
 
 Route::group([
 
-    'middleware' => 'api',
+    // 'middleware' => 'api',
     'prefix' => 'auth'
 
 ], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
+    Route::post('tablet-login', [AuthController::class, 'tabletLogin']);
+    Route::post('courier-login', [AuthController::class, 'courierLogin']);
     Route::post('session', [AuthController::class, 'me']);
+    Route::post('tablet-session', [TabletServiceController::class, 'me']);
 });
 
 Route::group([
@@ -47,3 +52,29 @@ Route::resource('baker', BakerController::class);
 Route::resource('courier', CourierController::class);
 Route::resource('order', OrderController::class);
 Route::resource('tablet', TabletController::class);
+
+
+Route::group([
+    'prefix' => 'tablet-service'
+], function ($router) {
+    Route::get('analytics', [TabletServiceController::class, 'analytics']);
+    Route::get('products', [TabletServiceController::class, 'products']);
+    Route::get('orders', [TabletServiceController::class, 'orders']);
+    Route::get('sales', [TabletServiceController::class, 'sales']);
+    Route::get('production-fetch', [TabletServiceController::class, 'productionFetch']);
+    Route::post('production-product', [TabletServiceController::class, 'productionProduct']);
+    Route::post('create-order', [TabletServiceController::class, 'createOrder']);
+    Route::post('create-sales', [TabletServiceController::class, 'createSale']);
+    Route::post('acceptance', [TabletServiceController::class, 'acceptance']);
+});
+
+Route::group([
+    'prefix' => 'courier-service'
+], function ($router) {
+    Route::get('me', [CourierServiceController::class, 'me']);
+    Route::get('orders', [CourierServiceController::class, 'orders']);
+    Route::post('acceptance', [CourierServiceController::class, 'acceptance']);
+    Route::get('history', [CourierServiceController::class, 'history']);
+    Route::get('change-status', [CourierServiceController::class, 'changeStatus']);
+    Route::get('active-order', [CourierServiceController::class, 'activeOrder']);
+});

@@ -4,6 +4,8 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Auth\AuthenticationException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -27,4 +29,27 @@ class Handler extends ExceptionHandler
             //
         });
     }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json([
+            'ok' => false,
+            'message' => 'Unauthenticated.'
+        ], 401);
+    }
+
+    public function render($request, Throwable $e)
+    {
+        // JWT token yo'q yoki noto'g'ri bo'lsa UnauthorizedHttpException tushadi
+        if ($e instanceof UnauthorizedHttpException) {
+            return response()->json([
+                'ok' => false,
+                'message' => 'Token is missing or invalid.'
+            ], 401);
+        }
+
+        // Boshqa xatolarni odatdagidek Laravel hal qiladi
+        return parent::render($request, $e);
+    }
+
 }

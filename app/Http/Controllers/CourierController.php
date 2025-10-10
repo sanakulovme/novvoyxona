@@ -2,66 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Courier;
 use App\Models\Branch;
 
 class CourierController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function fetch()
+    {
+        return Courier::with('branch')->where('deleted', false)->get();
+    }
+
     public function index()
     {
         return response()->json([
             'ok' => true,
-            'data' => Courier::with('branch')->get(),
+            'data' => $this->fetch(),
             'branches' => Branch::all(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'name'     => 'required|string|max:255',
-            'phone'    => 'required|string|min:9|max:15',
-            'branch_id' => 'required',
-        ]);
+        $check = Courier::where('phone', $request->phone)->first();
 
-        if ($validator->fails()) {
+        if($check){
             return response()->json([
-                'ok'      => false,
-                'errors'  => $validator->errors(),
-                'message' => $validator->errors()->first()
-            ], 422);
+                'ok' => false,
+                'error' => "Bu raqam avval ishlatilgan!"
+            ], 409);
         }
 
-        Courier::create($validator->validated());
+        Courier::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'branch_id' => $request->branch_id,
+            'password' => Hash::make($request->password),
+        ]);
 
         return response()->json([
             'ok'      => true,
-            'message' => 'Courier successfully created',
-            'data'    => Courier::with('branch')->get(),
+            'data'    => $this->fetch(),
         ], 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         $courier = Courier::find($id);
-
-        if (!$courier) {
-            return response()->json([
-                'ok'      => false,
-                'message' => 'Courier not found'
-            ], 404);
-        }
 
         return response()->json([
             'ok'   => true,
@@ -69,62 +58,27 @@ class CourierController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name'     => 'sometimes|required|string|max:255',
-            'phone'    => 'sometimes|required|string|min:9|max:15',
-            'location' => 'sometimes|required|string|max:255',
+        Courier::where('id', $id)->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'branch_id' => $request->branch_id,
         ]);
-
-        if ($validator->fails()) {
-            return response()->json([
-                'ok'      => false,
-                'errors'  => $validator->errors(),
-                'message' => $validator->errors()->first()
-            ], 422);
-        }
-
-        $courier = Courier::find($id);
-
-        if (!$courier) {
-            return response()->json([
-                'ok'      => false,
-                'message' => 'Courier not found'
-            ], 404);
-        }
-
-        $courier->update($validator->validated());
 
         return response()->json([
             'ok'      => true,
-            'message' => 'Courier successfully updated',
-            'data'    => $courier
+            'data'    => $this->fetch(),
         ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        $courier = Courier::find($id);
-
-        if (!$courier) {
-            return response()->json([
-                'ok'      => false,
-                'message' => 'Courier not found'
-            ], 404);
-        }
-
-        $courier->delete();
+        Courier::where('id', $id)->update([ 'deleted' => true ]);
 
         return response()->json([
-            'ok'      => true,
-            'message' => 'Courier successfully deleted'
+            'ok'   => true,
+            'data' => $this->fetch(),
         ]);
     }
 }

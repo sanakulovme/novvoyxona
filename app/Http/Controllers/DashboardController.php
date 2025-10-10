@@ -19,10 +19,10 @@ class DashboardController extends Controller
             'ok' => true,
             'data' => [
                 'orders' => Order::count(),
-                'couriers' => Courier::count(),
-                'bakers' => Baker::count(),
-                'branches' => Branch::count(),
-                'products' => Product::count(),
+                'couriers' => Courier::where('deleted', false)->count(),
+                'bakers' => Baker::where('deleted', false)->count(),
+                'branches' => Branch::where('deleted', false)->count(),
+                'products' => Product::where('deleted', false)->count(),
                 'tablets' => Tablet::count(),
             ]
         ]);
