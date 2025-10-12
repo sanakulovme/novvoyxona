@@ -35,6 +35,13 @@ class CourierServiceController extends Controller
 
     public function acceptance(Request $request)
     {
+        $order = Order::where('courier_id', auth('courier')->user()->id)->where('status', 'delivered')->first();
+
+        if($order) return response()->json([
+            'ok' => false,
+            'error' => "Sizda aktiv buyirtma mavjud. Iltimos avval aktiv bo'lgan buyurtmani yetkazing."
+        ], 409);
+
     	Order::where('id', $request->id)->update([ 'courier_id' => auth('courier')->user()->id, 'status' => 'delivered' ]);
 
     	return response()->json([
@@ -49,7 +56,25 @@ class CourierServiceController extends Controller
 
         return response()->json([
             'ok' => true,
-            'data' => $order || []
+            'data' => $order
+        ]);
+    }
+
+    public function successOrder(Request $request)
+    {
+        Order::where('id', $request->id)->update([ 'status' => 'success' ]);
+
+        return response()->json([
+            'ok' => true
+        ]);
+    }
+
+    public function cencelOrder(Request $request)
+    {
+        Order::where('id', $request->id)->update([ 'status' => 'canceled' ]);
+
+        return response()->json([
+            'ok' => true
         ]);
     }
 
@@ -81,6 +106,7 @@ class CourierServiceController extends Controller
         return response()->json([
             'ok' => true,
             'status' => $courier->status,
+            'user' => Courier::where('id', auth('courier')->user()->id)->with('branch')->first(),
         ]);
     }
 

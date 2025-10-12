@@ -1,0 +1,246 @@
+[
+    {
+        "id": 8,
+        "name": "Abbos Sanakulov",
+        "phone": "+998770804569",
+        "status": "active",
+        "created_at": "2025-10-11T11:16:45.000000Z",
+        "deleted": 0,
+        "updated_at": "2025-10-11T11:16:45.000000Z",
+        "branch_id": 9,
+        "productions": [
+            {
+                "id": 16,
+                "count": 50,
+                "baker_id": 8,
+                "product_id": 1,
+                "branch_id": 9,
+                "date": "2025-10-11 00:00:00",
+                "created_at": "2025-10-11T11:17:10.000000Z",
+                "updated_at": "2025-10-11T11:17:10.000000Z",
+                "product": {
+                    "id": 1,
+                    "name": "Oq non",
+                    "price": "12000",
+                    "created_at": "2025-10-02T17:26:13.000000Z",
+                    "deleted": 1,
+                    "updated_at": "2025-10-08T18:03:26.000000Z"
+                }
+            }
+        ],
+        "branch": {
+            "id": 9,
+            "name": "Samarqand, Paxtachi tumani",
+            "location": "Saddik 34",
+            "created_at": "2025-10-08T10:12:59.000000Z",
+            "deleted": 0,
+            "updated_at": "2025-10-08T10:12:59.000000Z"
+        }
+    },
+    {
+        "id": 7,
+        "name": "Behruz",
+        "phone": "+998700249414",
+        "status": "active",
+        "created_at": "2025-10-08T12:01:20.000000Z",
+        "deleted": 1,
+        "updated_at": "2025-10-08T17:55:34.000000Z",
+        "branch_id": 9,
+        "productions": [],
+        "branch": {
+            "id": 9,
+            "name": "Samarqand, Paxtachi tumani",
+            "location": "Saddik 34",
+            "created_at": "2025-10-08T10:12:59.000000Z",
+            "deleted": 0,
+            "updated_at": "2025-10-08T10:12:59.000000Z"
+        }
+    },
+    {
+        "id": 6,
+        "name": "Abbos Sanakulov",
+        "phone": "+998770804569",
+        "status": "active",
+        "created_at": "2025-10-06T14:36:33.000000Z",
+        "deleted": 0,
+        "updated_at": "2025-10-08T15:39:56.000000Z",
+        "branch_id": 3,
+        "productions": [],
+        "branch": {
+            "id": 3,
+            "name": "Chilonzor",
+            "location": "21-mavze",
+            "created_at": "2025-10-02T14:26:30.000000Z",
+            "deleted": 1,
+            "updated_at": "2025-10-08T18:12:51.000000Z"
+        }
+    },
+    {
+        "id": 5,
+        "name": "Abror Ashurov",
+        "phone": "+998914589658",
+        "status": "active",
+        "created_at": "2025-10-06T11:46:08.000000Z",
+        "deleted": 0,
+        "updated_at": "2025-10-06T11:46:08.000000Z",
+        "branch_id": 5,
+        "productions": [
+            {
+                "id": 14,
+                "count": 20,
+                "baker_id": 5,
+                "product_id": 2,
+                "branch_id": 5,
+                "date": "2025-10-08 00:00:00",
+                "created_at": "2025-10-08T18:27:56.000000Z",
+                "updated_at": "2025-10-08T18:27:56.000000Z",
+                "product": {
+                    "id": 2,
+                    "name": "Patir",
+                    "price": "10000",
+                    "created_at": "2025-10-03T04:08:15.000000Z",
+                    "deleted": 0,
+                    "updated_at": "2025-10-04T14:31:54.000000Z"
+                }
+            },
+            {
+                "id": 15,
+                "count": 50,
+                "baker_id": 5,
+                "product_id": 3,
+                "branch_id": 5,
+                "date": "2025-10-10 00:00:00",
+                "created_at": "2025-10-10T09:38:00.000000Z",
+                "updated_at": "2025-10-10T09:38:00.000000Z",
+                "product": {
+                    "id": 3,
+                    "name": "Qora non",
+                    "price": "10000",
+                    "created_at": "2025-10-03T04:45:19.000000Z",
+                    "deleted": 0,
+                    "updated_at": "2025-10-03T04:45:19.000000Z"
+                }
+            },
+            {
+                "id": 17,
+                "count": 50,
+                "baker_id": 5,
+                "product_id": 5,
+                "branch_id": 5,
+                "date": "2025-10-11 00:00:00",
+                "created_at": "2025-10-11T11:20:34.000000Z",
+                "updated_at": "2025-10-11T11:20:34.000000Z",
+                "product": {
+                    "id": 5,
+                    "name": "Monster Tort",
+                    "price": "55000",
+                    "created_at": "2025-10-06T11:48:07.000000Z",
+                    "deleted": 0,
+                    "updated_at": "2025-10-06T11:48:07.000000Z"
+                }
+            }
+        ],
+        "branch": {
+            "id": 5,
+            "name": "Samarqand",
+            "location": "Samarqand, Bulvar",
+            "created_at": "2025-10-02T15:00:17.000000Z",
+            "deleted": 0,
+            "updated_at": "2025-10-02T15:00:17.000000Z"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Ali Valiyev",
+        "phone": "+998774589632",
+        "status": "active",
+        "created_at": "2025-10-02T15:57:24.000000Z",
+        "deleted": 1,
+        "updated_at": "2025-10-08T17:56:14.000000Z",
+        "branch_id": 5,
+        "productions": [],
+        "branch": {
+            "id": 5,
+            "name": "Samarqand",
+            "location": "Samarqand, Bulvar",
+            "created_at": "2025-10-02T15:00:17.000000Z",
+            "deleted": 0,
+            "updated_at": "2025-10-02T15:00:17.000000Z"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Abror",
+        "phone": "+998907177775",
+        "status": "active",
+        "created_at": "2025-10-01T09:52:45.000000Z",
+        "deleted": 1,
+        "updated_at": "2025-10-08T17:54:33.000000Z",
+        "branch_id": 3,
+        "productions": [],
+        "branch": {
+            "id": 3,
+            "name": "Chilonzor",
+            "location": "21-mavze",
+            "created_at": "2025-10-02T14:26:30.000000Z",
+            "deleted": 1,
+            "updated_at": "2025-10-08T18:12:51.000000Z"
+        }
+    },
+    {
+        "id": 2,
+        "name": "Aziz Ergashev",
+        "phone": "+998914785268",
+        "status": "busy",
+        "created_at": "2025-10-01T09:43:01.000000Z",
+        "deleted": 0,
+        "updated_at": "2025-10-08T16:01:07.000000Z",
+        "branch_id": 7,
+        "productions": [
+            {
+                "id": 12,
+                "count": 10,
+                "baker_id": 2,
+                "product_id": 6,
+                "branch_id": 7,
+                "date": "2025-10-08 00:00:00",
+                "created_at": "2025-10-08T16:02:51.000000Z",
+                "updated_at": "2025-10-08T16:02:51.000000Z",
+                "product": {
+                    "id": 6,
+                    "name": "To'y torti",
+                    "price": "120000",
+                    "created_at": "2025-10-06T14:42:09.000000Z",
+                    "deleted": 0,
+                    "updated_at": "2025-10-06T14:42:09.000000Z"
+                }
+            },
+            {
+                "id": 13,
+                "count": 10,
+                "baker_id": 2,
+                "product_id": 5,
+                "branch_id": 7,
+                "date": "2025-10-08 00:00:00",
+                "created_at": "2025-10-08T16:29:01.000000Z",
+                "updated_at": "2025-10-08T16:29:01.000000Z",
+                "product": {
+                    "id": 5,
+                    "name": "Monster Tort",
+                    "price": "55000",
+                    "created_at": "2025-10-06T11:48:07.000000Z",
+                    "deleted": 0,
+                    "updated_at": "2025-10-06T11:48:07.000000Z"
+                }
+            }
+        ],
+        "branch": {
+            "id": 7,
+            "name": "Namangan",
+            "location": "Oltariq, 21",
+            "created_at": "2025-10-02T15:12:50.000000Z",
+            "deleted": 0,
+            "updated_at": "2025-10-02T15:12:50.000000Z"
+        }
+    }
+]

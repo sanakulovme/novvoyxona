@@ -11,6 +11,7 @@ use App\Models\Production;
 use App\Models\Order;
 use App\Models\ProductConnect;
 use App\Models\Sold;
+use App\Models\Employee;
 
 use Carbon\Carbon;
 
@@ -94,6 +95,31 @@ class TabletServiceController extends Controller
         ]);
     }
 
+    public function employees()
+    {
+        $data = Employee::where('status', '!=', 'deleted')->where('branch_id', auth('tablet')->user()->branch_id)->get();
+
+        return response()->json([
+            'ok' => true,
+            'data' => $data,
+        ]);
+    }
+
+
+    public function changeEmployeeStatus($id)
+    {
+        $employee = Employee::find($id);
+        $employee->status = $employee->status == 'online' ? 'offline' : 'online';
+        $employee->save();
+
+        $data = Employee::where('status', '!=', 'deleted')->where('branch_id', auth('tablet')->user()->branch_id)->get();
+
+        return response()->json([
+            'ok' => true,
+            'data' => $data,
+        ]);
+    }
+
     public function createOrder(Request $request)
     {
         $order = Order::create([
@@ -104,6 +130,7 @@ class TabletServiceController extends Controller
             "location" => $request->location,
             "order_time" => Carbon::now()->format("Y-m-d"),
             "details" => json_encode($request->details),
+            "coordinates" => json_encode($request->coordinates),
             'products_count' => $request->products_count,
         ]);
 

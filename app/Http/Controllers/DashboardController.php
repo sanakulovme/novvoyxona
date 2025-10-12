@@ -9,21 +9,24 @@ use App\Models\Baker;
 use App\Models\Branch;
 use App\Models\Product;
 use App\Models\Tablet;
+use App\Models\Production;
+use App\Models\Employee;
 
 
 class DashboardController extends Controller
 {
     public function analytics()
     {
+        $bakers = Baker::where('deleted', false)->with(['productions.product', 'branch'])->orderBy('created_at', 'desc')->get();
+        $employees = Employee::where('status', '!=', 'deleted')->with('branch')->get();
+        $products = Product::all();
+
         return response()->json([
             'ok' => true,
             'data' => [
-                'orders' => Order::count(),
-                'couriers' => Courier::where('deleted', false)->count(),
-                'bakers' => Baker::where('deleted', false)->count(),
-                'branches' => Branch::where('deleted', false)->count(),
-                'products' => Product::where('deleted', false)->count(),
-                'tablets' => Tablet::count(),
+                'bakers' => $bakers,
+                'employees' => $employees,
+                'products' => $products
             ]
         ]);
     }

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Order extends Model
 {
     use HasFactory;
-    protected $fillable = ["products_count", "branch_id", "courier_id", "customer_name", "customer_phone", "order_time", "amount", "status", "location", "details"];
+    protected $fillable = ["coordinates", "products_count", "branch_id", "courier_id", "customer_name", "customer_phone", "order_time", "amount", "status", "location", "details"];
 
     public function branch()
     {

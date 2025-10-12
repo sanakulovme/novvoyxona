@@ -11,7 +11,7 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $orders = Order::with(['branch', 'courier'])->get();
+        $orders = Order::with(['branch', 'courier'])->orderBy('created_at', 'desc')->get();
         return response()->json([
             'ok' => true,
             'data' => $orders
@@ -24,12 +24,13 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'branch_id'    => 'required',
+            'branch_id'       => 'required',
             'customer_name'   => 'required',
             'customer_phone'  => 'required',
             'amount'          => 'required',
             'location'        => 'required',
             'details'         => 'required',
+            'coordinates'     => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -48,6 +49,7 @@ class OrderController extends Controller
             "location" => $request->location,
             "order_time" => Carbon::now()->format("Y-m-d"),
             "details" => json_encode($request->details),
+            "coordinates" => json_encode($request->coordinates),
             'products_count' => $request->products_count,
         ]);
 

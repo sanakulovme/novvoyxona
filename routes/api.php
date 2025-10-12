@@ -10,6 +10,9 @@ use App\Http\Controllers\BranchController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TabletController;
+use App\Http\Controllers\EmployeeController;
+
+// ---- services ----
 use App\Http\Controllers\TabletServiceController;
 use App\Http\Controllers\CourierServiceController;
 
@@ -52,6 +55,9 @@ Route::resource('baker', BakerController::class);
 Route::resource('courier', CourierController::class);
 Route::resource('order', OrderController::class);
 Route::resource('tablet', TabletController::class);
+Route::resource('employee', EmployeeController::class);
+
+Route::get('branch/{id}/products', [BranchController::class, 'products']);
 
 
 Route::group([
@@ -62,6 +68,10 @@ Route::group([
     Route::get('orders', [TabletServiceController::class, 'orders']);
     Route::get('sales', [TabletServiceController::class, 'sales']);
     Route::get('production-fetch', [TabletServiceController::class, 'productionFetch']);
+    Route::get('employees', [TabletServiceController::class, 'employees']);
+
+    // --- POST ---
+    Route::post('employee/{id}/change-status', [TabletServiceController::class, 'changeEmployeeStatus']);
     Route::post('production-product', [TabletServiceController::class, 'productionProduct']);
     Route::post('create-order', [TabletServiceController::class, 'createOrder']);
     Route::post('create-sales', [TabletServiceController::class, 'createSale']);
@@ -73,8 +83,12 @@ Route::group([
 ], function ($router) {
     Route::get('me', [CourierServiceController::class, 'me']);
     Route::get('orders', [CourierServiceController::class, 'orders']);
-    Route::post('acceptance', [CourierServiceController::class, 'acceptance']);
     Route::get('history', [CourierServiceController::class, 'history']);
     Route::get('change-status', [CourierServiceController::class, 'changeStatus']);
     Route::get('active-order', [CourierServiceController::class, 'activeOrder']);
+
+    // --- POST ---
+    Route::post('acceptance', [CourierServiceController::class, 'acceptance']);
+    Route::post('success-order', [CourierServiceController::class, 'successOrder']);
+    Route::post('cencel-order', [CourierServiceController::class, 'cencelOrder']);
 });

@@ -15,4 +15,9 @@ class Baker extends Model
     {
         return $this->belongsTo(Branch::class);
     }
+
+    public function productions()
+    {
+        return $this->hasMany(Production::class, 'baker_id');
+    }
 }

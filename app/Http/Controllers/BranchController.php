@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Branch;
+use App\Models\Production;
 
 class BranchController extends Controller
 {
@@ -18,6 +19,16 @@ class BranchController extends Controller
         return response()->json([
             'ok' => true,
             'data' => $this->fetch(),
+        ]);
+    }
+
+    public function products($id)
+    {
+        $data = Production::where('branch_id', $id)->with('product')->get();
+
+        return response()->json([
+            'ok' => true,
+            'data' => $data,
         ]);
     }
 
