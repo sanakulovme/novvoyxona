@@ -51,9 +51,10 @@ class AuthController extends Controller
         $credentials = request(['phone', 'password']);
 
         if (! $token = auth('tablet')->attempt($credentials)) {
+
             return response()->json([
                 'ok' => false,
-                'error' => 'Telefon raqami yoki parol xato!',
+                'error' => 'Telefon 1 raqami yoki parol xato!',
                 'request' => $request->all()
             ], 401);
         }

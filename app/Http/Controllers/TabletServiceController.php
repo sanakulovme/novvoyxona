@@ -14,6 +14,8 @@ use App\Models\Sold;
 use App\Models\Employee;
 
 use Carbon\Carbon;
+use Google\Service\Sheets;
+use Google\Client;
 
 class TabletServiceController extends Controller
 {
@@ -50,7 +52,59 @@ class TabletServiceController extends Controller
             'date' => Carbon::now()->format('Y-m-d'),
         ]);
 
+        $baker = Baker::find($request->baker_id);
+        $branch = Branch::find(auth('tablet')->user()->branch_id);
+        $product = Product::find($request->product_id);
+
+        $this->appendRow([
+            $baker->name,
+            $branch->name.' '.$branch->location,
+            Carbon::now()->format('Y-m-d'),
+            $product->name, $request->count
+        ]);
+
         return response()->json($this->fetch());
+    }
+
+    public function appendRow($data)
+    {
+        // 1️⃣ Google Client sozlash
+
+        $client = new Client();
+        $client->setAuthConfig(storage_path('app/google/novvoyxona-key.json'));
+        $client->addScope(Sheets::SPREADSHEETS);
+
+        // 2️⃣ Sheets servisini yaratish
+        $service = new Sheets($client);
+
+        $spreadsheetId = '1E8uCnJ9uvw-TQEu42J8wIJxIh6HvxpnmZpnm4NKFFRY'; // sizning Google Sheet ID
+        $range = 'A2:E2'; // qaysi joyga yoziladi
+
+        // 3️⃣ Yoziladigan ma’lumotlar
+        $values = [$data];
+
+        $body = new \Google\Service\Sheets\ValueRange([
+            'values' => $values
+        ]);
+
+        // 4️⃣ Append qilish
+        $params = [
+            'valueInputOption' => 'USER_ENTERED'
+        ];
+
+        $result = $service->spreadsheets_values->append(
+            $spreadsheetId,
+            $range,
+            $body,
+            $params
+        );
+
+        return true;
+
+        return response()->json([
+            'status' => 'success',
+            'updatedCells' => $result->getUpdates()->getUpdatedCells(),
+        ]);
     }
 
     public function productionFetch()

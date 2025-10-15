@@ -13,6 +13,8 @@ use App\Models\ProductConnect;
 use App\Models\Sold;
 use App\Models\Courier;
 
+use App\Events\LocationUpdated;
+
 use Carbon\Carbon;
 
 
@@ -21,6 +23,17 @@ class CourierServiceController extends Controller
     public function __construct()
     {
         $this->middleware('jwt.courier');
+    }
+
+    public function changeLocation(Request $request)
+    {
+        broadcast(new LocationUpdated(
+            $request->userId,
+            $request->latitude,
+            $request->longitude
+        ));
+
+        return response()->json(['ok' => true]);
     }
 
     public function orders()

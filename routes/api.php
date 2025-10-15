@@ -58,6 +58,7 @@ Route::resource('tablet', TabletController::class);
 Route::resource('employee', EmployeeController::class);
 
 Route::get('branch/{id}/products', [BranchController::class, 'products']);
+Route::get('courier/{id}/location', [CourierController::class, 'location']);
 
 
 Route::group([
@@ -88,6 +89,7 @@ Route::group([
     Route::get('active-order', [CourierServiceController::class, 'activeOrder']);
 
     // --- POST ---
+    Route::post('change-location', [CourierServiceController::class, 'changeLocation']);
     Route::post('acceptance', [CourierServiceController::class, 'acceptance']);
     Route::post('success-order', [CourierServiceController::class, 'successOrder']);
     Route::post('cencel-order', [CourierServiceController::class, 'cencelOrder']);

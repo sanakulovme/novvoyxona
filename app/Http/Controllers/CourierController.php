@@ -24,6 +24,16 @@ class CourierController extends Controller
         ]);
     }
 
+    public function location($id)
+    {
+        $data = Courier::find($id);
+
+        return response()->json([
+            'ok' => true,
+            'data' => $data,
+        ]);
+    }
+
     public function store(Request $request)
     {
         $check = Courier::where('phone', $request->phone)->first();
