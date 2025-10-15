@@ -77,7 +77,7 @@ class TabletServiceController extends Controller
         // 2️⃣ Sheets servisini yaratish
         $service = new Sheets($client);
 
-        $spreadsheetId = '1E8uCnJ9uvw-TQEu42J8wIJxIh6HvxpnmZpnm4NKFFRY'; // sizning Google Sheet ID
+        $spreadsheetId = '1_dlP245nZ5-fRE0nkkobVbUAZLImQi0FYxb2SNtsvgo'; // sizning Google Sheet ID
         $range = 'A2:E2'; // qaysi joyga yoziladi
 
         // 3️⃣ Yoziladigan ma’lumotlar
