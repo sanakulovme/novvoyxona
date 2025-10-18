@@ -41,7 +41,7 @@ class CourierServiceController extends Controller
     	$orders = Order::where('branch_id', auth('courier')->user()->branch_id)->where('status', 'ready')->get();
 
     	return response()->json([
-    		'ok' => false,
+    		'ok' => true,
     		'data' => $orders
     	]);
     }

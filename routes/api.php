@@ -38,6 +38,7 @@ Route::group([
     Route::post('courier-login', [AuthController::class, 'courierLogin']);
     Route::post('session', [AuthController::class, 'me']);
     Route::post('tablet-session', [TabletServiceController::class, 'me']);
+    Route::post('courier-session', [CourierServiceController::class, 'me']);
 });
 
 Route::group([
