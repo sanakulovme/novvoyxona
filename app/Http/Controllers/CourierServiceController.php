@@ -28,7 +28,7 @@ class CourierServiceController extends Controller
     public function changeLocation(Request $request)
     {
         broadcast(new LocationUpdated(
-            $request->userId,
+            auth('courier')->user()->id,
             $request->latitude,
             $request->longitude
         ));
