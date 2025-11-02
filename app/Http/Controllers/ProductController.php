@@ -16,7 +16,12 @@ class ProductController extends Controller
 
     public function fetch()
     {
-        return Product::withCount('branches')->with('branches')->where('deleted', false)->get();
+        return Product::withCount('branches')
+        ->with(['branches' => function ($query) {
+            $query->where('deleted', false);
+        }])
+        ->where('deleted', false)
+        ->get();
     }
 
     public function index()

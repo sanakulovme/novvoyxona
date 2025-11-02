@@ -11,7 +11,11 @@ class BranchController extends Controller
 
     public function fetch()
     {
-        return Branch::withCount('products')->where('deleted', false)->get();
+        return Branch::withCount(['products' => function ($query) {
+            $query->where('deleted', false);
+        }])
+        ->where('deleted', false)
+        ->get();
     }
 
     public function index()
