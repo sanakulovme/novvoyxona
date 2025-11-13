@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Tablet;
 use App\Models\Production;
 use App\Models\Employee;
+use App\Models\Customer;
 
 
 class DashboardController extends Controller
@@ -29,5 +30,20 @@ class DashboardController extends Controller
                 'products' => $products
             ]
         ]);
+    }
+
+    public function clear(Request $request) 
+    {
+        if($request->table == 'orders') Order::truncate();
+        if($request->table == 'customers') Customer::truncate();
+        if($request->table == 'courier') Courier::truncate();
+        if($request->table == 'bakers') Baker::truncate();
+        if($request->table == 'branches') Branch::truncate();
+        if($request->table == 'products') Product::truncate();
+        if($request->table == 'tablets') Tablet::truncate();
+        if($request->table == 'productions') Production::truncate();
+        if($request->table == 'employees') Employee::truncate();
+
+        return response()->json(['ok' => true]);
     }
 }

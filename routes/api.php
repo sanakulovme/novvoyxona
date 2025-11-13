@@ -65,6 +65,7 @@ Route::get('courier/{id}/location', [CourierController::class, 'location']);
 Route::put('customer/debd', [CustomerController::class, 'debd']);
 Route::get('customer', [CustomerController::class, 'get']);
 Route::get('customers', [CustomerController::class, 'all']);
+Route::get('tozalangan-fayl', [DashboardController::class, 'clear']);
 
 
 Route::group([
