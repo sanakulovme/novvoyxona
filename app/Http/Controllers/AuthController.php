@@ -55,7 +55,8 @@ class AuthController extends Controller
             return response()->json([
                 'ok' => false,
                 'error' => 'Telefon 1 raqami yoki parol xato!',
-                'request' => $request->all()
+                'request' => $request->all(),
+                'token' => $token
             ], 401);
         }
 

@@ -11,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TabletController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\CustomerController;
 
 // ---- services ----
 use App\Http\Controllers\TabletServiceController;
@@ -60,6 +61,9 @@ Route::resource('employee', EmployeeController::class);
 
 Route::get('branch/{id}/products', [BranchController::class, 'products']);
 Route::get('courier/{id}/location', [CourierController::class, 'location']);
+
+Route::get('customer', [CustomerController::class, 'get']);
+Route::get('customers', [CustomerController::class, 'all']);
 
 
 Route::group([

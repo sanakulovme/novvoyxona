@@ -12,6 +12,8 @@ use App\Models\Order;
 use App\Models\ProductConnect;
 use App\Models\Sold;
 use App\Models\Courier;
+use App\Models\Customer;
+use App\Models\History;
 
 use App\Events\LocationUpdated;
 
@@ -38,7 +40,7 @@ class CourierServiceController extends Controller
 
     public function orders()
     {
-    	$orders = Order::where('branch_id', auth('courier')->user()->branch_id)->where('status', 'ready')->get();
+    	$orders = Order::where('status', '!=', 'delivered')->where('status', '!=', 'canceled')->where('status', '!=', 'rejected')->where('status', '!=', 'success')->get();
 
     	return response()->json([
     		'ok' => true,
@@ -50,11 +52,6 @@ class CourierServiceController extends Controller
     {
         $order = Order::where('courier_id', auth('courier')->user()->id)->where('status', 'delivered')->first();
 
-        if($order) return response()->json([
-            'ok' => false,
-            'error' => "Sizda aktiv buyirtma mavjud. Iltimos avval aktiv bo'lgan buyurtmani yetkazing."
-        ], 409);
-
     	Order::where('id', $request->id)->update([ 'courier_id' => auth('courier')->user()->id, 'status' => 'delivered' ]);
 
     	return response()->json([
@@ -65,7 +62,7 @@ class CourierServiceController extends Controller
 
     public function activeOrder()
     {
-        $order = Order::where('courier_id', auth('courier')->user()->id)->where('status', 'delivered')->first();
+        $order = Order::where('courier_id', auth('courier')->user()->id)->where('status', 'delivered')->get();
 
         return response()->json([
             'ok' => true,
@@ -76,6 +73,14 @@ class CourierServiceController extends Controller
     public function successOrder(Request $request)
     {
         Order::where('id', $request->id)->update([ 'status' => 'success' ]);
+
+        $order = Order::find($request->id);
+        $customer = Customer::where('phone', $order->customer_phone)->first();
+
+        if($request->amount < $order->amount){
+            $customer->debt = $order->amount - $request->amount;
+            $customer->save();
+        }
 
         return response()->json([
             'ok' => true

@@ -12,6 +12,8 @@ use App\Models\Order;
 use App\Models\ProductConnect;
 use App\Models\Sold;
 use App\Models\Employee;
+use App\Models\History;
+use App\Models\Courier;
 
 use Carbon\Carbon;
 use Google\Service\Sheets;
@@ -56,12 +58,12 @@ class TabletServiceController extends Controller
         $branch = Branch::find(auth('tablet')->user()->branch_id);
         $product = Product::find($request->product_id);
 
-        $this->appendRow([
-            $baker->name,
-            $branch->name.' '.$branch->location,
-            Carbon::now()->format('Y-m-d'),
-            $product->name, $request->count
-        ]);
+        // $this->appendRow([
+        //     $baker->name,
+        //     $branch->name.' '.$branch->location,
+        //     Carbon::now()->format('Y-m-d'),
+        //     $product->name, $request->count
+        // ]);
 
         return response()->json($this->fetch());
     }
@@ -114,9 +116,10 @@ class TabletServiceController extends Controller
 
     public function orders()
     {
+        $branch = Branch::find(auth('tablet')->user()->branch_id);
         return response()->json([
             'ok' => true,
-            'data' => Order::where('branch_id', auth('tablet')->user()->branch_id)->with(['branch', 'courier'])->get(),
+            'data' => History::where('branch_name', $branch->name)->get()
         ]);
     }
 
@@ -176,22 +179,31 @@ class TabletServiceController extends Controller
 
     public function createOrder(Request $request)
     {
-        $order = Order::create([
-            "branch_id" => auth('tablet')->user()->branch_id,
-            "customer_name" => $request->customer_name,
-            "customer_phone" => $request->customer_phone,
-            "amount" => $request->amount,
-            "location" => $request->location,
-            "order_time" => Carbon::now()->format("Y-m-d"),
-            "details" => json_encode($request->details),
-            "coordinates" => json_encode($request->coordinates),
-            'products_count' => $request->products_count,
+        // $order = Order::create([
+        //     "branch_id" => auth('tablet')->user()->branch_id,
+        //     "customer_name" => $request->customer_name,
+        //     "customer_phone" => $request->customer_phone,
+        //     "amount" => $request->amount,
+        //     "location" => $request->location,
+        //     "order_time" => Carbon::now()->format("Y-m-d"),
+        //     "details" => json_encode($request->details),
+        //     "coordinates" => json_encode($request->coordinates),
+        //     'products_count' => $request->products_count,
+        // ]);
+
+        $branch = Branch::find(auth('tablet')->user()->branch_id);
+        $courier = Courier::find($request->courier_id);
+
+        History::create([
+            'courier_name' => $courier->name,
+            'products' => json_encode($request->details),
+            'branch_name' => $branch->name
         ]);
 
         return response()->json([
             'ok' => true,
             'message' => 'Order created successfully',
-            'data' => Order::where('branch_id', auth('tablet')->user()->branch_id)->with('branch')->get(),
+            'data' => History::where('branch_name', $branch->name)->get()
         ], 201);
     }
 

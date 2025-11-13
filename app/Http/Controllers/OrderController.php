@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Order;
+use App\Models\Customer;
 use Carbon\Carbon;
 
 class OrderController extends Controller
@@ -16,6 +17,22 @@ class OrderController extends Controller
             'ok' => true,
             'data' => $orders
         ]);
+    }
+
+    public function customer(Request $request) 
+    {
+        $user = Customer::where('phone', "+$request->phone")->first();
+
+        if($user){
+            return response()->json([
+                'ok' => true, 
+                'user' => $user,
+            ]);
+        }else{
+            return response()->json([
+                'ok' => false,
+            ]);
+        }
     }
 
     /**
@@ -52,6 +69,16 @@ class OrderController extends Controller
             "coordinates" => json_encode($request->coordinates),
             'products_count' => $request->products_count,
         ]);
+
+        if(! Customer::where('phone', $request->customer_phone)->first()){
+            Customer::create([
+                'name' =>  $request->customer_name,
+                'phone' => $request->customer_phone,
+                'location' => $request->location,
+                'coordinates' => json_encode($request->coordinates),
+                'debt' => 0
+            ]);
+        }
 
         return response()->json([
             'ok' => true,
