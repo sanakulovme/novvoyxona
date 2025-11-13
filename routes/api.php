@@ -62,6 +62,7 @@ Route::resource('employee', EmployeeController::class);
 Route::get('branch/{id}/products', [BranchController::class, 'products']);
 Route::get('courier/{id}/location', [CourierController::class, 'location']);
 
+Route::put('customer/debd', [CustomerController::class, 'debd']);
 Route::get('customer', [CustomerController::class, 'get']);
 Route::get('customers', [CustomerController::class, 'all']);
 

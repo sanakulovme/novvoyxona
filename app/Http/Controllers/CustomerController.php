@@ -29,4 +29,16 @@ class CustomerController extends Controller
             'data' => Customer::all()
         ]);
     }
+
+    public function debd(Request $request) 
+    {
+        $customer = Customer::find($request->id);
+        $customer->debt = $customer->debt - $request->amount;
+        $customer->save();
+
+        return response()->json([
+            'ok' => true,
+            'data' => Customer::all()
+        ]);
+    }
 }
