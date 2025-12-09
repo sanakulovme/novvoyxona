@@ -19,7 +19,10 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://admin.novvoyxona.in',
+        'http://admin.novvoyxona.in',
+    ],
 
     'allowed_origins_patterns' => [],
 
